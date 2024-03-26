@@ -1,0 +1,441 @@
+.App {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+
+}
+body {
+  margin:0;
+  padding:0;
+
+}
+h1,h2 {
+  text-align: center;
+}
+.register,.login {
+  margin-top:200px;
+  width:50%;
+background-color:lightgray;
+ box-shadow: 0 0 5px rgba(0,0,0,.3);
+ font-size: 20px;
+}
+.register input,.login input {
+  border:none;
+  outline: none;;
+}
+.register h2 ,.login h2 {
+  text-align: center;
+}
+.register button,.login button  {
+  width:50%;
+  margin-left:25%;
+  padding:7px;
+  border:none;
+  outline:none;
+}
+
+.label {
+  font-weight:bold;
+  margin-bottom: 5px;
+}
+input {
+  padding:10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+.navbar {
+  margin:0;
+  width:100%;
+  height:30%;
+  background-color:blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:white;
+  text-decoration: none;
+}
+.navbar h1 {
+  margin-right:70px;
+  position:sticky;
+}
+a {
+  color:white;
+  text-decoration: none;
+  margin:10px;
+  font-size:25px;
+}
+
+
+ul {
+  list-style-type:none;
+  padding:0;
+  margin:0;
+  margin-bottom:70px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 800px) {
+  .app {
+    width:100%;
+  }
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    height:30%;
+  }
+ 
+}
+@media (min-width:800px) and (max-width: 1000px) {
+ 
+ 
+  .navbar img {
+    width:120px;
+    margin-right: 300px;
+  }
+}
+@media (min-width:1000px){
+ 
+  .navbar img {
+    width:120px;
+    margin-right: 500px;
+  }
+}
+
+
+.auth {
+  width:100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  height:50px;
+}
+.create-post {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+  justify-content: center;
+  gap:40px;
+  box-shadow: 0 0 10 rgba(0,0,0,.2);
+ 
+}
+.create-post form {
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: center;
+  width:300px;
+  gap:10px;
+  font-size: 20px;
+  box-shadow: 0 0 2px rgba(0.0.0.1);
+  padding:6px;
+
+}
+.create-post .name-box {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  
+}
+.create-post .description-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-post .description-box textarea {
+  height:100px;
+}
+.create-post textarea input {
+  border:none;
+  outline:none;
+}
+
+.create-post button {
+  background-color: blue;
+  color:white;
+  padding:5px;
+  margin:auto;
+  box-shadow: 0 0 4px rgba(0,0,0.2);
+  border: none;
+}
+.create-post .upload-box{
+  width:300px;
+
+  text-align: center;
+}
+button {
+  cursor:pointer;
+}
+
+.home-btn{
+display: flex;
+justify-content:space-between;
+}
+.home-btn button {
+  background-color: black;
+  color:white;
+  border: none;
+  border-radius:30px;
+}
+.navbar img {
+width: 100px;
+margin-left:0;
+}
+.profile {
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+.profile img {
+  width:100px;
+  border-radius: 50%;
+}
+.profile p {
+  font-size: 30px;
+}
+
+.profile button {
+  width:40%;
+  height:50px;
+  padding:5px;
+  border-radius:30px;
+  outline: none;
+  border:none;
+  font-size: 20px;
+}
+
+.home-box {
+  width:70%;
+  margin-top:30px;
+  margin:auto;
+  display: flex;
+  flex-direction: column;
+   font-size: 25px;
+}
+.post {
+  width:100%;
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+.post img {
+  width:100%;
+}
+.home-post-box {
+  display:flex;
+  flex-direction: column;
+
+
+}
+.home-post-box .postimg {
+  margin-top:10px;
+}
+.post li {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.save-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:70%;
+  margin:auto;
+  padding:2px;
+  font-size: 25px;
+}
+.save-container img {
+  width:100%;
+}
+.save-list {
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+  display: flex;
+  flex-direction: column;
+  gap:100px;
+  align-items: center;
+}
+
+.upload-box {
+  margin-top: 40px;
+  margin-bottom: -20px;
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+.create-post button {
+  margin-top: 25px;
+}
+.home-post-box .desc {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+
+.conversaton {
+  display: flex;
+  flex-direction: column;
+  gap:40px;
+  
+}
+
+
+.conversation-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.profile {
+  width: 100%; /* Set the width of each profile item */
+ margin-top:10px;
+
+}
+.profile:hover {
+  background-color:lightblue;
+}
+.chat {
+  display: flex;
+  height: 100vh; /* Adjust height as needed */
+}
+
+.chat-left-wrapper {
+  flex: 3.5;
+  padding: 20px;
+  background-color: #f0f0f0; /* Example background color */
+  overflow-y: auto; /* Add vertical scrolling */
+}
+
+.chat-center-wrapper {
+  flex: 5.5;
+  padding: 20px;
+  background-color: #ffffff; /* Example background color */
+  overflow-y: auto; /* Add vertical scrolling */
+}
+.chat-center {
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+.chat-center img {
+  width:70px;
+  border-radius: 50%
+}
+.chat-right-wrapper {
+  flex: 3;
+  padding: 20px;
+  background-color: #f0f0f0; /* Example background color */
+  overflow-y: auto; /* Add vertical scrolling */
+}
+
+.chat-menu-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.chat-box-bottom {
+  margin-top: 20px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.messages-top {
+  display: flex;
+  gap:20px;
+}
+.messages-top img {
+  margin-top:20px;
+  height:60px;
+}
+.online-box .image-box {
+  display: flex;
+  gap:10px;
+}
+
+.image-box {
+  position: relative;
+  /* Add any desired styles for the image container */
+}
+
+.online-sign {
+  position: absolute;
+  top:3px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color:greenyellow;
+  /* Add any additional styles for the online sign */
+}
+
+.online-box img {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+}
+.chat-box-bottom {
+  margin-top: 100px;
+}
+.friend-user {
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+  gap:10px;
+  margin:30px 0;
+}
+
+.chat-left img {
+  width:50px;
+  border-radius: 50%;
+}
+
+.chat-right {
+  background-color: #ffffff; /* Example background color */
+  padding: 10px;
+  border-radius: 5px;
+  flex:3;
+}
+
+/* Style for online users list (you can adjust as needed) */
+.chat-right ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.chat-right ul li {
+  margin-bottom: 10px;
+  color: #333;
+}
+.chat-center-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color:lightcyan;
+}
+.chat-center {
+  display: flex;
+}
+.chat-box-bottom {
+  display: flex;
+}
+.userinfo-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-info-image img {
+ width:50px;
+ border-radius: 50%; 
+}
