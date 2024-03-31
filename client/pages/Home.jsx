@@ -68,7 +68,7 @@ console.log(error);
 return (
 <div className="home-box">
 {/* Display current user's profile */}
-<div className="profile-wrapper">
+<div className="user-box">
 {profiles.map((profile) => {
 if(profile.userOwner===userID) {
 return (
@@ -96,7 +96,7 @@ return (
 onClick={() => savePost(post._id)}
 disabled={isPostSaved.includes(post._id)}
 style={{
-backgroundColor: isPostSaved.includes(post._id) ? "rgba(0,0,0 , 0.5)" : "red"
+backgroundColor: isPostSaved.includes(post._id) ? "rgba(0,0,0 , 0.2)" : "rgba(0,0,0,0.1)"
 }}
 >
 {isPostSaved.includes(post._id) ? "Saved" : "Save"}
@@ -114,6 +114,7 @@ backgroundColor: isPostSaved.includes(post._id) ? "rgba(0,0,0 , 0.5)" : "red"
 <h2>{post.name}</h2>
 <div className="desc">{post.description}</div>
 
+<div>
 {post.imageUrl && (
 <img className="postimg"
 src={`http://localhost:3005/api/assets/uploads/${post.imageUrl}`}
@@ -121,22 +122,26 @@ alt={post.name}
 />
 )}
 </div>
+</div>
 </li>
 );
 }
 return null; // Add a return statement for the else case
 })}
 </ul> }
-</div>
+
 <hr/>
-<div>
+</div>
+
+<div className="friend-box">
 {profiles.map((profile) => {
 if (profile.userOwner !== userID) {
 return (
+
 <div key={profile._id}>
 <div className="profile">
 <img src={`http://localhost:3005/api/assets/uploads/${profile.imageUrl}`} alt={profile.name} />
-<p>{profile.name}</p>
+<p className="username">{profile.name}</p>
 </div>
 
 
@@ -146,12 +151,12 @@ if (post.userOwner === profile.userOwner) {
 return (
 <li key={post._id}>
 
-<div>
+<div className="home-btn">
 <button
 onClick={() => savePost(post._id)}
 disabled={isPostSaved.includes(post._id)}
 style={{
-backgroundColor: isPostSaved.includes(post._id) ? "rgba(0,0,0 , 0.5)" : "red"
+backgroundColor: isPostSaved.includes(post._id) ? "rgba(0,0,0 , 0.1)" : "rgba(55,70,65,.1)"
 }}
 >
 {isPostSaved.includes(post._id) ? "Saved" : "Save"}

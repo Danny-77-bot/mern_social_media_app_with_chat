@@ -51,7 +51,7 @@ const CreatePost = () => {
   
 
   return (
-    <div className="create-post">
+    <div className="create-feed">
       <h2>Create Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="name-box">

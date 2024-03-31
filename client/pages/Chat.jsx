@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { io } from "socket.io-client";
 import axios from 'axios';
 import { useGetUserID } from '../src/hooks/useGetUserId';
 import DisplayText from './DisplayText';
@@ -9,6 +10,38 @@ export default function Chat() {
   const [chatId, setChatId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [socket, setSocket] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [recipientId, setRecipientId] = useState(null);
+  const [enlargedProfile, setEnlargedProfile] = useState(null); 
+
+  useEffect(() => {
+    const newSocket = io("http://localhost:4000");
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.emit("addNewUser", userID);
+
+    socket.on("getOnlineUsers", (res) => {
+      setOnlineUsers(res);
+    });
+
+    socket.on("fetchMessages", (message) => {
+      setMessages(prevMessages => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.off("getOnlineUsers");
+      socket.off("fetchMessages");
+    };
+  }, [socket, userID]);
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -16,35 +49,50 @@ export default function Chat() {
         const response = await axios.get('http://localhost:3005/profiles');
         setProfiles(response.data);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching profiles:", error);
       }
     };
 
     fetchProfiles();
   }, []);
 
+  useEffect(() => {
+    if (recipientId) {
+      getConversationIds(userID, recipientId);
+    }
+  }, [recipientId, userID]);
+
+  useEffect(() => {
+    if (chatId) {
+      fetchMessages(chatId);
+    }
+  }, [chatId]);
+
+  useEffect(() => {
+    const storedMessages = JSON.parse(localStorage.getItem('messages'));
+    if (storedMessages) {
+      setMessages(storedMessages);
+    }
+  }, []);
+
   const getConversationIds = async (userId, clickedUserId) => {
-    console.log(userId, clickedUserId);
+    setRecipientId(clickedUserId);
     try {
       const response = await axios.get(`http://localhost:3005/chats/${userId}/${clickedUserId}`);
       const chatData = response.data;
 
       if (chatData[0]?._id) {
-        setChatId(chatData[0]?._id);
-        fetchMessages(chatData[0]?._id); // Fetch messages when chatId is set
+        setChatId(chatData[0]._id);
       } else {
-        // Create a new chat if none exists
         const newChatResponse = await axios.post('http://localhost:3005/chats', {
           firstId: userId,
           secondId: clickedUserId
         });
         const newChat = newChatResponse.data;
-        console.log(newChat._id);
         setChatId(newChat._id);
-        setMessages([]); // Clear existing messages
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching conversation IDs:", error);
     }
   };
 
@@ -53,8 +101,9 @@ export default function Chat() {
       const response = await axios.get(`http://localhost:3005/messages/${chatId}`);
       const text = response.data;
       setMessages(text);
+      localStorage.setItem('messages', JSON.stringify(text));
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching messages:", error);
     }
   };
 
@@ -74,47 +123,50 @@ export default function Chat() {
           senderId: userID,
           text: newMessage
         });
-        console.log(newMessage); // Log the newMessage component
-        setNewMessage(''); // Clear the new message input
+        setNewMessage('');
+        fetchMessages(chatId);
       } else {
         console.log('No chat selected');
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error sending message:", error);
     }
   };
 
-console.log(chatId);
   return (
     <div className="chat">
-      <div className="chat-left-wrapper">
-        <div className="chat-left">
-          <h2>Choose a user to start chatting:</h2>
-          {profiles.map((profile) => (
-            profile.userOwner !== userID && (
-              <div onClick={() => handleProfileClick(profile.userOwner)} key={profile._id}>
-                <img
-                  src={`http://localhost:3005/api/assets/uploads/${profile.imageUrl}`}
-                  alt={profile.name}
-                />
+      <div className="chat-left">
+        <h2>Your Friends:</h2>
+        {profiles.map((profile) => {
+          if (profile.userOwner !== userID) {
+            const isOnline = onlineUsers.some((user) => user.userId === profile.userOwner);
+            return (
+              <div className='profile-chat' onClick={() => handleProfileClick(profile.userOwner)} key={profile._id}>
+                <div className='chat-image-box'>
+                  <img
+                    src={`http://localhost:3005/api/assets/uploads/${profile.imageUrl}`}
+                    alt={profile.name}
+                  />
+                  <div className={isOnline ? 'online-sign' : null}></div>
+                </div>
                 <p>{profile.name}</p>
               </div>
-            )
-          ))}
-        </div>
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
 
-      <div className="chat-center-wrapper">
+      <div className="chat-center">
         <DisplayText messages={messages} profiles={profiles} />
-        <div className="chat-center">
-          <div className="chat-box-bottom">
-            <textarea
-              value={newMessage}
-              onChange={handleInputText}
-              placeholder="Write something"
-            ></textarea>
-            <button onClick={sendNewMessage}>Send</button>
-          </div>
+        <div className="chat-box-bottom">
+          <textarea
+            value={newMessage}
+            onChange={handleInputText}
+            placeholder="Write something"
+          ></textarea>
+          <button onClick={sendNewMessage}>Send</button>
         </div>
       </div>
     </div>

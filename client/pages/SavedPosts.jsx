@@ -30,19 +30,21 @@ export default function SavedRecipes() {
   };
 
   return (
-    <div className="save-container">
+    <div className="saved-box">
       <h1>Saved Posts</h1>
       <ul className="save-list">
         {savedPosts.map((post) => (
           <li key={post._id}>
-            <div>
+            <div className="btn">
               <button onClick={() => deleteSavedPost(post._id)}>X</button>
-              <h2>{post.name}</h2>
             </div>
+           <div className="saved-image-box">
+           <h2>{post.name}</h2>
             <p>{post.description}</p>
             {post.imageUrl && (
               <img src={`http://localhost:3005/api/assets/uploads/${post.imageUrl}`} />
             )}
+           </div>
           </li>
         ))}
       </ul>
