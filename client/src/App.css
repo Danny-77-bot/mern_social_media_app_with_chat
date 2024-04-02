@@ -251,17 +251,33 @@ ul li {
 }
 .chat-center .chat-box-bottom {
   display: flex;
-  position:absolute;
-  left:10px;
-  bottom: 1px;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Set background color for better visibility */
 }
+
+.chat-box-bottom textarea {
+  flex: 1;
+  height: 40px; /* Set the height of the textarea */
+  resize: none; /* Prevent resizing of the textarea */
+  margin-right: 10px; /* Add margin between textarea and button */
+}
+
 .chat-box-bottom button {
-  background-color: hwb(226 8% 34% / 0.555);
-  color:white;
-  border-radius:10%;
-  border:none;
-  width:40px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px; /* Adjust padding for better appearance */
+  cursor: pointer;
 }
+
+.chat-box-bottom button:hover {
+  background-color: darkblue; /* Change background color on hover */
+}
+
 .chat img {
   width: 50px;
   height:50px;
@@ -308,10 +324,7 @@ padding: 10px;
     padding: 20px;
   }
 
-  .chat-center .chat-box-bottom {
-  margin-top: 100px;
-  
-  }
+ 
 }
 
 /* Media query for screens with a maximum width of 480px */

@@ -13,7 +13,8 @@ export default function Chat() {
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [recipientId, setRecipientId] = useState(null);
-  const [enlargedProfile, setEnlargedProfile] = useState(null); 
+  const [notification, setNotification] = useState([]);
+  const [currentChat, setCurrentChat] = useState([]);
 
   useEffect(() => {
     const newSocket = io("http://localhost:4000");
@@ -37,9 +38,22 @@ export default function Chat() {
       setMessages(prevMessages => [...prevMessages, message]);
     });
 
+    socket.on("getNotification", (res) => {
+      console.log("res",res);
+    // Debugging statement
+    const isChatOpen=currentChat?.members.some((id)=>id===res.secondId)
+    if(isChatOpen) {
+      setNotification(prevNotification => [res, ...prevNotification]);
+
+    } else {
+      setNotification((prev)=>[res,...prev]);
+    }
+    });
+
     return () => {
       socket.off("getOnlineUsers");
       socket.off("fetchMessages");
+      socket.off("getNotification");
     };
   }, [socket, userID]);
 
@@ -75,12 +89,23 @@ export default function Chat() {
     }
   }, []);
 
+  useEffect(() => {
+    if (notification.length > 0) {
+      const isChatOpen = currentChat && currentChat.members && currentChat.members.some(id => id === notification[0].senderId);
+      if (isChatOpen) {
+        setNotification(prev => [{ ...notification[0], isRead: true }, ...prev.slice(1)]);
+      } else {
+        setNotification(prev => [...notification, ...prev]);
+      }
+    }
+  }, [currentChat, notification]); 
+
   const getConversationIds = async (userId, clickedUserId) => {
     setRecipientId(clickedUserId);
     try {
       const response = await axios.get(`http://localhost:3005/chats/${userId}/${clickedUserId}`);
       const chatData = response.data;
-
+      setCurrentChat(chatData);
       if (chatData[0]?._id) {
         setChatId(chatData[0]._id);
       } else {
@@ -133,6 +158,8 @@ export default function Chat() {
     }
   };
 
+console.log("currentChat",currentChat);
+console.log("notification",notification);
   return (
     <div className="chat">
       <div className="chat-left">
