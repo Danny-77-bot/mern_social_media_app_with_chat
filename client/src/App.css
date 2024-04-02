@@ -328,7 +328,7 @@ padding: 10px;
 }
 
 /* Media query for screens with a maximum width of 480px */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .navbar {
     max-width: 100%; /* Adjust width for smaller screens */
     padding: 0 20px; /* Add padding for smaller screens */
@@ -336,6 +336,6 @@ padding: 10px;
     flex-direction: column;
     height:400px;
   }
-}
+} */
 
 
